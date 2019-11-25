@@ -10,6 +10,7 @@ class FirstPageState extends State<FirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title:Text('首页'),
         backgroundColor:Color.fromRGBO(255, 255, 255, 1),
         leading: Builder(
           builder: (BuildContext context) {
@@ -21,7 +22,12 @@ class FirstPageState extends State<FirstPage> {
           },
         ),
         actions: <Widget>[
-          PopupMenuButtonComp()
+          Theme(
+            data: Theme.of(context).copyWith(
+              cardColor: Colors.black,
+            ),
+            child:PopupMenuButtonComp()
+          )
 
         ],
 

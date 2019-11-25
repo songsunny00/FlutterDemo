@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/pages/home_page/home.dart';
+import 'package:myapp/pages/home_page/third_page.dart';
 class PopupMenuButtonComp extends StatefulWidget {
   @override
   PopupMenuButtonCompState createState() => new PopupMenuButtonCompState();
@@ -12,11 +14,21 @@ class PopupMenuButtonCompState extends State<PopupMenuButtonComp> {
         Icons.add,
         color:Colors.black87
       ),
+      offset: Offset(1.0,40.0),
       itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
           PopupMenuItem<String>(
-            value: "price", child:  Text('Sort by price')),
+            value: "price", child:  Text('Sort by price',style:TextStyle(color:Colors.white))),
           PopupMenuItem<String>(
-            value: "time", child:  Text('Sort by time')),
+            value: "time", 
+            child:  ListTile(
+              title: Text('time'),
+              onTap: (){
+                Navigator.push(context,new  MaterialPageRoute(
+                  builder:(context) => HomePage())
+                );
+              },
+            ),
+          )
       ],
       onSelected: (String action) {
         switch (action) {
@@ -27,7 +39,7 @@ class PopupMenuButtonCompState extends State<PopupMenuButtonComp> {
           // do nothing
             break;
         }
-    })
+    });
   }
 
 

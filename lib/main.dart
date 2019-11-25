@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/common/index.dart';
 import 'package:myapp/pages/home_page/home.dart';
-import 'package:myapp/pages/login.dart';
+import 'package:myapp/pages/user_page/login.dart';
 
 void main() => runApp(MyApp());
-const int ThemeColor = 0xFFC91B3A;
+const Color ThemeColor = Colours.app_main;//0xFFC91B3A;
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'title',
       theme: new ThemeData(
-        primaryColor: Color(ThemeColor),
+        primaryColor: ThemeColor,
         backgroundColor: Color(0xFFEFEFEF),
         accentColor: Color(0xFF888888),
         textTheme: TextTheme(
@@ -20,14 +21,14 @@ class MyApp extends StatelessWidget {
           body1: TextStyle(color: Color(0xFF888888), fontSize: 16.0),
         ),
         iconTheme: IconThemeData(
-          color: Color(ThemeColor),
+          color: ThemeColor,
           size: 35.0,
         ),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        // '/login': (context) => LoginPage(),
+        '/login': (context) => UserLoginPage(),
       },
     );
   }

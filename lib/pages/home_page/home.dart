@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myapp/pages/home_page/first_page.dart';
 import 'package:myapp/pages/home_page/second_page.dart';
 import 'package:myapp/pages/home_page/third_page.dart';
-
+import 'package:myapp/pages/user_page/login.dart';
+import 'package:myapp/routers/navigators.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -22,10 +24,17 @@ class _HomeState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // 检查登录是否有效
+    // Navigator.of(context).pushReplacementNamed('/login');
+    Future.delayed(Duration(milliseconds: 100)).then((_) {
+      Navigator.of(context).pushReplacementNamed('/login');
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    // 检查登录是否有效
+    // NavigatorUtil.pushPage(context, new UserLoginPage());
     final List<Widget> _children = [FirstPage(),SecondPage(),ThirdPage()];
     return Scaffold(
       body: _children[_selectedIndex],
@@ -48,5 +57,15 @@ class _HomeState extends State<HomePage> {
         onTap: onTabTapped,
       ),
     );
+  }
+
+  Future<bool> _getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token') != null;
+  }
+
+  Future<void> _logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
   }
 }
