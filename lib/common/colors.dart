@@ -35,4 +35,6 @@ class Colours {
   static const Color green_62 = Color(0xff626262); 
   static const Color green_e5 = Color(0xffe5e5e5); 
 
+  static const Color white_1 = Color(0xFFFFFFFF);    
+
 }

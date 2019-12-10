@@ -21,6 +21,13 @@ class _HomeState extends State<HomePage> {
     });
   }
 
+  void _incrementCounter() {
+    showDatePicker(context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime.now().subtract(new Duration(days: 30)),
+        lastDate: new DateTime.now().add(new Duration(days: 30))).then((v) {});
+  }
+
   @override
   void initState() {
     super.initState();

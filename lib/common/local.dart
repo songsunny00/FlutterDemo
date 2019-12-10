@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart' show SynchronousFuture;
 class DemoLocalizations {
+
+  static GlobalKey<_FreeLocalizations> freeLocalizationStateKey = new GlobalKey<_FreeLocalizations>();
 
   final Locale locale;
 
@@ -34,5 +37,66 @@ class DemoLocalizations {
   
   get inc{
     return _localizedValues[locale.languageCode]['inc'];
+  }
+
+  static DemoLocalizations of(BuildContext context){
+    return Localizations.of(context, DemoLocalizations);
+  }
+}
+
+class DemoLocalizationsDelegate extends LocalizationsDelegate<DemoLocalizations>{
+
+  const DemoLocalizationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) {
+    return ['en','zh'].contains(locale.languageCode);
+  }
+
+  @override
+  Future<DemoLocalizations> load(Locale locale) {
+    return new SynchronousFuture<DemoLocalizations>(new DemoLocalizations(locale));
+  }
+
+  @override
+  bool shouldReload(LocalizationsDelegate<DemoLocalizations> old) {
+    return false;
+  }
+
+  static DemoLocalizationsDelegate delegate = const DemoLocalizationsDelegate();
+}
+
+/**
+ * 切换 Flutter 应用内的语言
+ */
+class FreeLocalizations extends StatefulWidget{
+
+  final Widget child;
+
+  FreeLocalizations({Key key,this.child}):super(key:key);
+
+  @override
+  State<FreeLocalizations> createState() {
+    return new _FreeLocalizations();
+  }
+}
+
+class _FreeLocalizations extends State<FreeLocalizations>{
+
+  Locale _locale = const Locale('zh','CH');
+
+  changeLocale(Locale locale){
+    setState((){
+      _locale = locale;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Localizations.override(
+      context: context,
+      locale: _locale,
+      child: widget.child,
+    );
   }
 }

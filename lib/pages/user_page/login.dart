@@ -30,6 +30,7 @@ class LoginBody extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController _controllerName = new TextEditingController();
     TextEditingController _controllerPwd = new TextEditingController();
+    TextEditingController _controllerCode = new TextEditingController();
 
     void _userLogin() {
       String username = _controllerName.text;
@@ -44,9 +45,15 @@ class LoginBody extends StatelessWidget {
       }
     }
 
+    void _incrementCounter() {
+      showDatePicker(context: context,
+          initialDate: new DateTime.now(),
+          firstDate: new DateTime.now().subtract(new Duration(days: 30)),
+          lastDate: new DateTime.now().add(new Duration(days: 30))).then((v) {});
+    }
+
     return new Column(
       children: <Widget>[
-        new Expanded(child: new Container()),
         new Expanded(
             child: new Container(
           margin: EdgeInsets.only(left: 20, top: 15, right: 20),
@@ -64,9 +71,21 @@ class LoginBody extends StatelessWidget {
                 hasSuffixIcon: true,
                 hintText: Ids.user_pwd,
               ),
+              Gaps.vGap15,
+              LoginItem(
+                controller: _controllerCode,
+                prefixIcon: Icons.code,
+                hasRightBtn: true,
+                hintText: Ids.user_pwd,
+              ),
             ],
           ),
         )
+        ),
+        new FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'tip',
+          child: new Icon(Icons.add),
         ),
       ],
     );

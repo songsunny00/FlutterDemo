@@ -1,4 +1,5 @@
 import 'package:myapp/common/index.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class LoginItem extends StatefulWidget {
@@ -25,9 +26,13 @@ class LoginItem extends StatefulWidget {
 
 class LoginItemState extends State<LoginItem> {
   bool _obscureText;
+  //获取验证码
+  int _time = 60;
+  Timer _timer; // 倒计时的计时器
+  int _seconds = 60; // 当前倒计时的秒数
   bool _rightShowBtn = false;
   bool _gettingCode = false;
-  String _rightText = '获取验证码';
+  String _verifyStr = '获取验证码';
 
   @override
   void initState() {
@@ -38,18 +43,48 @@ class LoginItemState extends State<LoginItem> {
 
   _getToggleChild() {
     if (_rightShowBtn) {
-      return Text('');
-    } else {
-      return RaisedButton(
-        onPressed: () {
-          _gettingCode = !_gettingCode;
-          if(_gettingCode) {
-            
-          }
-        }, 
-        child: Text(_rightText)
+      return Expanded(
+          child: RaisedButton(
+            color: Colours.app_main,
+            textColor: Colours.white_1,
+            onPressed: () {
+              if(!_gettingCode) {
+                _startTimer();
+              }
+            }, 
+            child: Text(_verifyStr)
+          )
       );
+    } else {
+      return Text('');
     }
+  }
+
+  /// 启动倒计时的计时器。
+  void _startTimer() {
+    // 计时器（`Timer`）组件的定期（`periodic`）构造函数，创建一个新的重复计时器。
+    _timer = Timer.periodic(
+      Duration(seconds: 1),
+      (timer) {
+      _gettingCode = true;
+      if (_seconds == 0) {
+        _cancelTimer();
+        return;
+      }
+      _seconds--;
+      _verifyStr = '已发送$_seconds'+'s';
+      setState(() {});
+    });
+  }
+
+  /// 取消倒计时的计时器。
+  void _cancelTimer() {
+    // 计时器（`Timer`）组件的取消（`cancel`）方法，取消计时器。
+    _timer?.cancel();
+    _seconds = _time;
+    _gettingCode = false;
+    _verifyStr = '重新发送';
+    setState(() {});
   }
 
   @override
@@ -93,9 +128,7 @@ class LoginItemState extends State<LoginItem> {
                     borderSide: new BorderSide(color: Colours.green_1)),
               )),
         ),
-        new Expanded(
-          child: _getToggleChild(),
-        )
+        _getToggleChild()
       ],
     );
   }
