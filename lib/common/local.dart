@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart' show SynchronousFuture;
 class DemoLocalizations {
 
   static GlobalKey<_FreeLocalizations> freeLocalizationStateKey = new GlobalKey<_FreeLocalizations>();
+  // static _FreeLocalizations freeLocalizationStateKey = new _FreeLocalizations();
 
   final Locale locale;
 
@@ -22,6 +23,10 @@ class DemoLocalizations {
       'inc':'增加'
     }
   };
+
+  getString (attr) {
+    return _localizedValues[locale.languageCode][attr];
+  }
 
   get taskTitle{
     return _localizedValues[locale.languageCode]['task title'];

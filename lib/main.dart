@@ -30,12 +30,13 @@ class MyApp extends StatelessWidget {
       localeResolutionCallback: (deviceLocale, supportedLocales) {
         print('deviceLocale: $deviceLocale');
       },
-      localizationsDelegates: [                             //此处
+      locale: Locale('zh','CH'),  //不设置，则默认系统语言
+      localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        DemoLocalizationsDelegate.delegate,
+        DemoLocalizationsDelegate.delegate,  //设置本地化代理
       ],
-      supportedLocales: [                                   //此处
+      supportedLocales: [  //设置支持本地化语言集合
         const Locale('zh','CH'),
         const Locale('en','US'),
       ],
@@ -69,9 +70,9 @@ class _InitPageState extends State<InitPage> {
     super.initState();
     // 检查登录是否有效
     // Navigator.of(context).pushReplacementNamed('/login');
-    Future.delayed(Duration(milliseconds: 3000)).then((_) {
-      Navigator.of(context).pushReplacementNamed('/login');
-    });
+    // Future.delayed(Duration(milliseconds: 3000)).then((_) {
+    //   Navigator.of(context).pushReplacementNamed('/login');
+    // });
   }
 
   int _counter = 0;
