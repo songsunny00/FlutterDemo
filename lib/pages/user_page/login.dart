@@ -1,25 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/common/common.dart';
 import 'package:myapp/common/index.dart';
-import 'package:myapp/utils/util.dart';
+import 'package:myapp/utils/index.dart';
 import 'package:myapp/components/inputs/loginItem.dart';
+import 'package:myapp/components/buttons/index.dart';
+import 'package:myapp/components/color_block.dart';
+import 'package:myapp/store/index.dart';
 
-class UserLoginPage extends StatelessWidget {
+
+class UserLoginPage extends StatefulWidget {
+  UserLoginPage({Key key}) : super(key: key);
+
+
+  @override
+  _UserLoginState createState() => new _UserLoginState();
+}
+class _UserLoginState extends State<UserLoginPage> {
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       resizeToAvoidBottomInset: false,
-      body: new Stack(
+      body: new Container(
+        color: Colors.white,
+        child: new Stack(
         children: <Widget>[
-          new Image.asset(
-            Util.getImgPath("ic_login_bg"),
-            package: BaseConstant.packageBase,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
+          new Container(
+            padding:EdgeInsets.only(top:10),
+            height: 120,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("resources/images/bg.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Positioned(
+            height: 80,
+            right: 10,
+            top: 20,
+            child: new Row(
+              children: <Widget>[
+                new InkWell(
+                  child: new Container(
+                    padding: EdgeInsets.only(left: 10,right: 10),
+                    child: new Text(DemoLocalizations.of(context).getString('span_language')),
+                  ),
+                  onTap: () {
+                    // 修改语言
+                    String lang = DemoLocalizations.of(context).getString('span_language');
+                    if(lang=='CH') {
+                      Store.value<ConfigModel>(context).setLanguage('en');
+                    }else {
+                      Store.value<ConfigModel>(context).setLanguage('zh');
+                    }
+                  },
+                ),
+                new Text('|'),
+                new InkWell(
+                  child: new Container(
+                    padding: EdgeInsets.only(left: 10,right: 10),
+                    child: PopupMenuButton(
+                      child: Text(DemoLocalizations.of(context).getString('span_skin')),
+                      // initialValue: "red",
+                      offset: Offset(0, 20),
+                      padding: EdgeInsets.all(0),
+                      itemBuilder: (BuildContext context) {
+                        return <PopupMenuItem<String>>[
+                          PopupMenuItem<String>(child: ColorBlock(color:"red"), value: "red", height: 32,),
+                          PopupMenuItem<String>(child: ColorBlock(color:"green"), value: "green", height: 32,),
+                        ];
+                      },
+                      onSelected: (String action) {
+                        Store.value<ConfigModel>(context).setTheme(action);
+                      },
+                      onCanceled: () {
+                        print("onCanceled");
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            height: 100,
+            left: 10,
+            right: 10,
+            top: 100,
+            child: Image.asset('resources/images/logo.png'),
           ),
           new LoginBody()
         ],
+        )
       ),
     );
   }
@@ -36,11 +109,11 @@ class LoginBody extends StatelessWidget {
       String username = _controllerName.text;
       String password = _controllerPwd.text;
       if (username.isEmpty || username.length < 6) {
-        Util.showSnackBar(context, username.isEmpty ? "请输入用户名～" : "用户名至少6位～");
+        Utils.showSnackBar(context, username.isEmpty ? "请输入用户名～" : "用户名至少6位～");
         return;
       }
       if (password.isEmpty || password.length < 6) {
-        Util.showSnackBar(context, username.isEmpty ? "请输入密码～" : "密码至少6位～");
+        Utils.showSnackBar(context, username.isEmpty ? "请输入密码～" : "密码至少6位～");
         return;
       }
     }
@@ -56,7 +129,7 @@ class LoginBody extends StatelessWidget {
       children: <Widget>[
         new Expanded(
             child: new Container(
-          margin: EdgeInsets.only(left: 20, top: 15, right: 20),
+          margin: EdgeInsets.only(left: 20, top: 250, right: 20),
           child: new Column(
             children: <Widget>[
               LoginItem(
@@ -78,14 +151,29 @@ class LoginBody extends StatelessWidget {
                 hasRightBtn: true,
                 hintText: Ids.user_pwd,
               ),
+              new CommonRaisedButton (
+                text: DemoLocalizations.of(context).getString('btn_login'),
+                type: Store.value<ConfigModel>(context).theme,
+                margin: EdgeInsets.only(top: 20),
+                onPressed: () {
+                  _userLogin();
+                },
+              ),
+              Gaps.vGap30,
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Expanded(
+                    child: new Text('去注册',textAlign: TextAlign.left),
+                  ),
+                  new Expanded(
+                    child: new Text('忘记密码？',textAlign: TextAlign.right)
+                  ),
+                ],
+              )
             ],
           ),
         )
-        ),
-        new FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'tip',
-          child: new Icon(Icons.add),
         ),
       ],
     );

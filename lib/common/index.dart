@@ -13,3 +13,4 @@ export 'package:myapp/common/dimens.dart';
 export 'package:myapp/common/colors.dart';
 export 'package:myapp/common/strings.dart';
 export 'package:myapp/common/styles.dart';
+export 'package:myapp/common/local.dart';

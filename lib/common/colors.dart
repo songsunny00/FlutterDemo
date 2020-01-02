@@ -10,8 +10,11 @@
 import 'package:flutter/material.dart';
 
 class Colours {
-  static const Color app_main = Color(0xff239f9b);
-  static const Color app_main_100 = Color(0xFF02a19b);
+  static const Color app_main = Color(0xFFF20D0D);
+  static const Color app_main_100 = Color(0xFFf33434);
+
+  static const Color app_main_green = Color(0xFF239f9b);
+  static const Color app_main_green_100 = Color(0xFF02a19b);
 
   static const Color transparent_80 = Color(0x80000000); 
 
@@ -38,3 +41,40 @@ class Colours {
   static const Color white_1 = Color(0xFFFFFFFF);    
 
 }
+/**
+ * 皮肤颜色配置
+ */
+Map materialColor = {
+  'red': 0xFFF20D0D,
+  'green': 0xFF239f9b,
+};
+
+/**
+ * 按钮类型
+ */
+Map buttonType = {
+  "red": {
+    "color": Colours.app_main,
+    "textColor": Colors.white,
+    "splashColor": Colours.app_main_100,
+    "borderColor": Colours.app_main,
+  },
+  "red plain": {
+    "color": Colors.white70,
+    "textColor": Colours.app_main,
+    "splashColor": Colors.white54,
+    "borderColor": Colours.app_main,
+  },
+  "green": {
+    "color": Colours.app_main_green,
+    "textColor": Colors.white,
+    "splashColor": Colours.app_main_green_100,
+    "borderColor": Colours.app_main_green,
+  },
+  "green plain": {
+    "color": Colors.white70,
+    "textColor": Colours.app_main_green,
+    "splashColor": Colors.white54,
+    "borderColor": Colours.app_main_green,
+  }
+};

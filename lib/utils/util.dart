@@ -1,11 +1,10 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/common/common.dart';
 import 'package:myapp/common/index.dart';
 
 class Utils {
   static String getImgPath(String name, {String format: 'png'}) {
-    return 'assets/images/$name.$format';
+    return 'resources/images/$name.$format';
   }
 
 
@@ -42,36 +41,11 @@ class Utils {
     return (count >= 10 || title.length > 16) ? 14.0 : 18.0;
   }
 
-  /// 0
-  /// -1
-  /// 1
-  static int getUpdateStatus(String version) {
-    String locVersion = AppConfig.version;
-    int remote = int.tryParse(version.replaceAll('.', ''));
-    int loc = int.tryParse(locVersion.replaceAll('.', ''));
-    if (remote <= loc) {
-      return 0;
-    } else {
-      return (remote - loc >= 2) ? -1 : 1;
-    }
-  }
-
   static bool isNeedLogin(String pageId) {
     if (pageId == Ids.titleCollection) {
       return true;
     }
     return false;
-  }
-
-  static int getLoadStatus(bool hasError, List data) {
-    if (hasError) return LoadStatus.fail;
-    if (data == null) {
-      return LoadStatus.loading;
-    } else if (data.isEmpty) {
-      return LoadStatus.empty;
-    } else {
-      return LoadStatus.success;
-    }
   }
 }
 

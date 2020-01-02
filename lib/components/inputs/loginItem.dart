@@ -45,8 +45,9 @@ class LoginItemState extends State<LoginItem> {
     if (_rightShowBtn) {
       return Expanded(
           child: RaisedButton(
-            color: Colours.app_main,
-            textColor: Colours.white_1,
+            color: Colors.white70,
+            textColor:  Colours.text_normal,
+            elevation: 1,
             onPressed: () {
               if(!_gettingCode) {
                 _startTimer();
@@ -123,9 +124,9 @@ class LoginItemState extends State<LoginItem> {
                         })
                     : null,
                 focusedBorder: new UnderlineInputBorder(
-                    borderSide: new BorderSide(color: Colours.green_1)),
+                    borderSide: new BorderSide(color: Colours.gray_99)),
                 enabledBorder: new UnderlineInputBorder(
-                    borderSide: new BorderSide(color: Colours.green_1)),
+                    borderSide: new BorderSide(color: Colours.gray_99)),
               )),
         ),
         _getToggleChild()
