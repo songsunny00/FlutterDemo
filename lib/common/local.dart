@@ -10,6 +10,8 @@ class DemoLocalizations {
       'span_language': 'EN',
       'span_skin': 'SKIN',
       'btn_login': 'Login',
+      'span_register': 'Register',
+      'span_forget_password': 'Forget Password?',
       'task title': 'Flutter Demo',
       'titlebar title': 'Flutter Demo Home Page',
 
@@ -18,6 +20,8 @@ class DemoLocalizations {
       'span_language': 'CH',
       'span_skin': '皮肤',
       'btn_login': '登  录',
+      'span_register': '去注册',
+      'span_forget_password': '忘记密码？',
       'task title': 'Flutter 示例',
       'titlebar title': 'Flutter 示例主页面',
     }

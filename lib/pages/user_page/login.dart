@@ -164,10 +164,10 @@ class LoginBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Expanded(
-                    child: new Text('去注册',textAlign: TextAlign.left),
+                    child: new Text(DemoLocalizations.of(context).getString('span_register'),textAlign: TextAlign.left),
                   ),
                   new Expanded(
-                    child: new Text('忘记密码？',textAlign: TextAlign.right)
+                    child: new Text(DemoLocalizations.of(context).getString('span_forget_password'),textAlign: TextAlign.right)
                   ),
                 ],
               )
