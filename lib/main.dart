@@ -81,8 +81,8 @@ class _InitPageState extends State<InitPage> {
     Future.delayed(Duration.zero, () async {
       String token = await Store.value<ConfigModel>().getToken();
       if(Utils.isEmpty(token)) {
-        Navigator.of(context).pushReplacementNamed('/home');
-        // Navigator.of(context).pushReplacementNamed('/login');
+        // Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/login');
       }else {
         Navigator.of(context).pushReplacementNamed('/home');
       }
