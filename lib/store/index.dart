@@ -3,10 +3,10 @@ import 'package:provider/provider.dart'
     show ChangeNotifierProvider, MultiProvider, Consumer, Provider;
 export 'package:provider/provider.dart';
 //
-import 'package:myapp/models/config_model.dart' show ConfigModel;
-import 'package:myapp/models/user_model.dart' show UserModel;
-export 'package:myapp/models/config_model.dart' show ConfigModel;
-export 'package:myapp/models/user_model.dart' show UserModel;
+import 'package:myapp/store/modules/config_model.dart' show ConfigModel;
+import 'package:myapp/store/modules/user_model.dart' show UserModel;
+export 'package:myapp/store/modules/config_model.dart' show ConfigModel;
+export 'package:myapp/store/modules/user_model.dart' show UserModel;
 
 class Store {
   static BuildContext context;

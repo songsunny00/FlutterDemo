@@ -5,6 +5,9 @@ import 'package:myapp/components/inputs/loginItem.dart';
 import 'package:myapp/components/buttons/index.dart';
 import 'package:myapp/components/color_block.dart';
 import 'package:myapp/store/index.dart';
+import 'package:myapp/network/api.dart';
+import 'package:myapp/utils/loading.dart';
+final Api _api = Api();
 
 
 class UserLoginPage extends StatefulWidget {
@@ -18,6 +21,7 @@ class _UserLoginState extends State<UserLoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Loading.ctx = context; // 注入context
     return new Scaffold(
       resizeToAvoidBottomInset: false,
       body: new Container(
@@ -98,24 +102,48 @@ class _UserLoginState extends State<UserLoginPage> {
   }
 }
 
+TextEditingController _controllerName = new TextEditingController();
+TextEditingController _controllerPwd = new TextEditingController();
+TextEditingController _controllerCode = new TextEditingController();
+
 class LoginBody extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    TextEditingController _controllerName = new TextEditingController();
-    TextEditingController _controllerPwd = new TextEditingController();
-    TextEditingController _controllerCode = new TextEditingController();
-
-    void _userLogin() {
+  Widget build(BuildContext context) {  
+    
+    //登录
+    void _userLogin() async{
       String username = _controllerName.text;
       String password = _controllerPwd.text;
+      String code = _controllerCode.text;
       if (username.isEmpty || username.length < 6) {
-        Utils.showSnackBar(context, username.isEmpty ? "请输入用户名～" : "用户名至少6位～");
+        Utils.showSnackBar(context, username.isEmpty ? DemoLocalizations.of(context).getString('user_name') : DemoLocalizations.of(context).getString('login_username_tip'));
         return;
       }
       if (password.isEmpty || password.length < 6) {
-        Utils.showSnackBar(context, username.isEmpty ? "请输入密码～" : "密码至少6位～");
+        Utils.showSnackBar(context, username.isEmpty ? DemoLocalizations.of(context).getString('user_pwd') : DemoLocalizations.of(context).getString('login_pwd_tip'));
         return;
       }
+      if (code.isEmpty || code.length < 4) {
+        Utils.showSnackBar(context, username.isEmpty ? DemoLocalizations.of(context).getString('user_code') : DemoLocalizations.of(context).getString('login_code_tip'));
+        return;
+      }
+      var returnData = await _api.login({
+        'phone': username,
+        'code': code
+      });
+      if(returnData != null) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
+    }
+    
+    //发送验证码
+    void sendCode() {
+      String username = _controllerName.text;
+      if (username.isEmpty || username.length < 6) {
+        Utils.showSnackBar(context, username.isEmpty ? DemoLocalizations.of(context).getString('user_name') : DemoLocalizations.of(context).getString('login_username_tip'));
+        return;
+      }
+      _api.getPhoneLoginCode({'phone': username});
     }
 
     void _incrementCounter() {
@@ -134,22 +162,30 @@ class LoginBody extends StatelessWidget {
             children: <Widget>[
               LoginItem(
                 controller: _controllerName,
-                prefixIcon: Icons.person,
-                hintText: Ids.user_name,
+                prefixIcon: Icons.phone_iphone,
+                hintText: DemoLocalizations.of(context).getString('user_name'),
               ),
               Gaps.vGap15,
               LoginItem(
                 controller: _controllerPwd,
                 prefixIcon: Icons.lock,
                 hasSuffixIcon: true,
-                hintText: Ids.user_pwd,
+                hintText: DemoLocalizations.of(context).getString('user_pwd'),
               ),
               Gaps.vGap15,
               LoginItem(
                 controller: _controllerCode,
-                prefixIcon: Icons.code,
+                prefixIcon: Icons.message,
                 hasRightBtn: true,
-                hintText: Ids.user_pwd,
+                hintText: DemoLocalizations.of(context).getString('user_code'),
+                onPressed: () {
+                  //发送验证码
+                  sendCode();
+                },
+                onSubmitted: () {
+                  _userLogin();
+                }
+                
               ),
               new CommonRaisedButton (
                 text: DemoLocalizations.of(context).getString('btn_login'),

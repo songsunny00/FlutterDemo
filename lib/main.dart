@@ -4,7 +4,6 @@ import 'package:myapp/common/index.dart';
 import 'package:myapp/utils/index.dart';
 import 'package:myapp/pages/home_page/home.dart';
 import 'package:myapp/pages/user_page/login.dart';
-// import 'package:myapp/common/local.dart';
 import 'package:myapp/store/index.dart';
 
 void main() => runApp(Store.init(child: MyApp()));
@@ -82,7 +81,8 @@ class _InitPageState extends State<InitPage> {
     Future.delayed(Duration.zero, () async {
       String token = await Store.value<ConfigModel>().getToken();
       if(Utils.isEmpty(token)) {
-        Navigator.of(context).pushReplacementNamed('/login');
+        Navigator.of(context).pushReplacementNamed('/home');
+        // Navigator.of(context).pushReplacementNamed('/login');
       }else {
         Navigator.of(context).pushReplacementNamed('/home');
       }

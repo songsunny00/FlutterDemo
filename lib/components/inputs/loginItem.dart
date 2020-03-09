@@ -10,6 +10,9 @@ class LoginItem extends StatefulWidget {
     this.hasRightBtn = false,
     this.hintText,
     this.controller,
+    this.onPressed,
+    this.onChange,
+    this.onSubmitted
   }) : super(key: key);
 
   final IconData prefixIcon;
@@ -17,6 +20,9 @@ class LoginItem extends StatefulWidget {
   final bool hasRightBtn;
   final String hintText;
   final TextEditingController controller;
+  final VoidCallback onPressed;
+  final onChange;
+  final onSubmitted;
 
   @override
   State<StatefulWidget> createState() {
@@ -51,6 +57,7 @@ class LoginItemState extends State<LoginItem> {
             onPressed: () {
               if(!_gettingCode) {
                 _startTimer();
+                widget.onPressed();
               }
             }, 
             child: Text(_verifyStr)
@@ -105,6 +112,12 @@ class LoginItemState extends State<LoginItem> {
           child: new TextField(
               obscureText: _obscureText,//是否是密码
               controller: widget.controller,
+              onChanged: (text) {//内容改变的回调
+                widget.onChange && widget.onChange('$text');
+              },
+              onSubmitted: (text) {//内容提交(按回车)的回调
+                widget.onChange && widget.onSubmitted('$text');
+              },
               style: new TextStyle(color: Colours.gray_66, fontSize: Dimens.font14),
               decoration: new InputDecoration(
                 hintText: widget.hintText,

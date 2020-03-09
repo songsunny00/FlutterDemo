@@ -18,6 +18,11 @@ class LocalStorage {
     prefs.setString(key, value);
   }
 
+  static Future getJSON(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return json.decode(prefs.getString(key));
+  }
+
   static Future remove(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(key);

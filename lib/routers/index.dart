@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class SlideRightRoute extends PageRouteBuilder {
   final Widget widget;
@@ -17,3 +18,16 @@ class SlideRightRoute extends PageRouteBuilder {
          }
       );
 }
+// Navigator.push(context, SlideRightRoute(widget: SampleModify(sample.zsjdlx,sample.zsjdid)));
+
+//跳转到web页pushWeb
+// Navigator.push(
+//   context,
+//   new CupertinoPageRoute<void>(
+//     builder: (ctx) => new WebScaffold(
+//       title: title,
+//       titleId: titleId,
+//       url: url,
+//     )
+//   )
+// );
